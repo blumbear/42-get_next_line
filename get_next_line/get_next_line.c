@@ -5,86 +5,71 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 15:06:39 by ttaquet           #+#    #+#             */
-/*   Updated: 2023/11/22 16:47:55 by ttaquet          ###   ########.fr       */
+/*   Created: 2023/11/25 15:33:50 by ttaquet           #+#    #+#             */
+/*   Updated: 2023/11/25 17:13:55 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_add_buffer(char	*buffer, char	*res)
+int	end_of_line(char	buffer[BUFFER_SIZE])
 {
-	char	*tmp;
-	int		i;
-
-	tmp = malloc((ft_strlen(buffer) + ft_strlen(res) + 1) * sizeof(char));
-	i = 0;
-	while (*res)
-	{
-		tmp[i++] = *res;
-		res++;
-	}
 	while (*buffer)
 	{
-		tmp[i++] = *buffer;
+		if (*buffer == '\n')
+			return (1);
 		buffer++;
 	}
-	tmp[i] = '\0';
-	return (tmp);
+	return (0);
 }
 
-int	ft_lines_end(char	*buffer)
+char	*add_buffer_to_res(char	*res, char	buffer[BUFFER_SIZE])
 {
 	int	i;
 
-	i = 0;
-	while (buffer[i])
+	i = ft_strlen(res);
+	while (*buffer && *buffer != '\n')
 	{
-		if (buffer[i] == '\n')
-			return (i + 1);
+		res[i] = *buffer;
 		i++;
+		buffer++;
 	}
-	return (BUFFER_SIZE);
+	return (res);
+}
+
+
+// modifier buffer pour supprimer tt ce qu'il y a avant le premier '\n' et 
+// renvoyer tt ce qu'il y a entre le premier et le deuxieme '\n'
+//donc pouvoir afficher les ligne une a une et ne pas affciher pls fois la meme
+char	*ft_start(char	buffer[BUFFER_SIZE], char	*res)
+{
+	while (*buffer)
+	{
+
+	}
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	buffer[BUFFER_SIZE];
 	char		*res;
-	char		*tmp;
-	int			i;
 
-	buffer = malloc(BUFFER_SIZE * sizeof(char));
-	res = malloc(BUFFER_SIZE * sizeof(char));
-	while (read (fd, buffer, BUFFER_SIZE)
-		&& ft_lines_end (buffer) != BUFFER_SIZE)
+	res = NULL;
+	res = ft_start(buffer, *&res);
+	while(read (fd, buffer, BUFFER_SIZE) && !end_of_line(buffer))
 	{
-		tmp = *&res;
-		res = ft_add_buffer(buffer, res);
-		free (tmp);
+		res = ft_realloc(res, (size_t)(ft_strlen(res) + BUFFER_SIZE + 1) * sizeof(char));
+		add_buffer_to_res(res, buffer);
+		res[ft_strlen(res)] = '\0';
 	}
-	i = 0;
-	tmp = malloc(ft_lines_end(buffer) + 1);
-	while (buffer[i] && buffer[i] != '\n')
-	{
-		tmp[i] = buffer[i];
-		i++;
-	}
-	tmp[i] = buffer[i];
-	res = ft_add_buffer(tmp, res);
+	res = ft_realloc(res, (size_t)(ft_strlen(res) + BUFFER_SIZE + 1) * sizeof(char));
+	add_buffer_to_res(res, buffer);
+	res[ft_strlen(res)] = '\0';
 	return (res);
 }
+
 int main(){
 	int	fd = open("test.txt", O_RDONLY);
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
-	printf("%s\n",get_next_line(fd));
 	printf("%s\n",get_next_line(fd));
 	printf("%s\n",get_next_line(fd));
 	printf("%s\n",get_next_line(fd));
