@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:15:18 by ttaquet           #+#    #+#             */
-/*   Updated: 2023/11/27 15:55:00 by ttaquet          ###   ########.fr       */
+/*   Updated: 2023/11/29 17:18:42 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@ int	ft_strlen(char	*str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+int	not_in(char	*str, char c)
+{
+	if (str == NULL)
+		return (0);
+	while (*str)
+	{
+		if (*str == c)
+			return (0);
+		str++;
+	}
+	return (1);
 }
 
 void	*ft_memcpy(void	*dest, const void	*src, size_t	n)
@@ -48,14 +61,22 @@ void	*ft_memmove(void	*dest, const void	*src, size_t	n)
 
 	i = 0;
 	if (src > dest)
+	{
 		while (i < n)
 		{
 			((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
+			((unsigned char *)src)[i] = '\0';
 			i++;
 		}
+	}
 	else if (dest > src)
+	{
 		while (n-- > 0)
+		{
 			((unsigned char *)dest)[n] = ((unsigned char *)src)[n];
+			((unsigned char *)src)[n] = '\0';
+		}
+	}
 	return (dest);
 }
 
@@ -67,9 +88,13 @@ void	*ft_realloc(void *ptr, size_t size)
 	if (ptr == NULL)
 		return (ptr = malloc (size));
 	tmp = malloc (size);
+	if (!tmp)
+		return (NULL);
 	ft_memcpy (tmp, ptr, size);
 	free(ptr);
 	ptr = malloc (size);
+	if (!ptr)
+		return (NULL);
 	ft_memcpy (ptr, tmp, size);
 	return (ptr);
 }

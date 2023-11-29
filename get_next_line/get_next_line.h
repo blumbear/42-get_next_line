@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:06:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2023/11/27 16:20:30 by ttaquet          ###   ########.fr       */
+/*   Updated: 2023/11/29 17:30:20 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ char	*get_next_line(int fd);
 int		ft_strlen(char	*str);
 void	*ft_realloc(void *ptr, size_t size);
 void	*ft_memmove(void	*dest, const void	*src, size_t	n);
-
+int		not_in(char *str, char c);
 
 #endif
