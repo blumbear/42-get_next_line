@@ -6,7 +6,7 @@
 /*   By: ttaquet <ttaquet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 15:33:50 by ttaquet           #+#    #+#             */
-/*   Updated: 2023/12/06 15:13:52 by ttaquet          ###   ########.fr       */
+/*   Updated: 2023/12/07 16:22:57 by ttaquet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*get_next_line(int fd)
 	{
 		line = ft_strjoin(line, buffer);
 		if (!line)
-			return (NULL);
+			return (free(line), NULL);
 		if (ft_not_in(line, '\n') > -1)
 			line[ft_not_in(line, '\n') + 1] = '\0';
 	}
@@ -61,16 +61,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int main(){
-// 	int	fd = open("test.txt", O_RDONLY);
-// 	char	*test = NULL;
-// 	for (int i = 0; i < 7; i++)
-// 	{
-// 		test = get_next_line(fd);
-// 		if (test == NULL)
-// 			printf("(null)\n--\n");
-// 		else
-// 			printf("%s--\n",test);
-// 		free(test);
-// 	}
-// }
+int main(){
+	int	fd = open("test.txt", O_RDONLY);
+	char	*test = NULL;
+	for (int i = 0; i < 2; i++)
+	{
+		test = get_next_line(fd);
+		if (test == NULL)
+			printf("(null)\n--\n");
+		else
+			printf("%s--\n",test);
+		free(test);
+	}
+}
