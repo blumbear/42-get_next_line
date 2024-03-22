@@ -60,17 +60,3 @@ char	*get_next_line(int fd)
 		ft_strcpy(buffer, buffer + ft_not_in(buffer, '\n') + 1);
 	return (line);
 }
-
-int main(){
-	int	fd = open("test.txt", O_RDONLY);
-	char	*test = NULL;
-	for (int i = 0; i < 2; i++)
-	{
-		test = get_next_line(fd);
-		if (test == NULL)
-			printf("(null)\n--\n");
-		else
-			printf("%s--\n",test);
-		free(test);
-	}
-}
